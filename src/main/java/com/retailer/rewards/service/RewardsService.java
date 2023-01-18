@@ -28,20 +28,16 @@ public class RewardsService {
         Timestamp lastMonthTimestamp = getDateBasedOnOffSetDays(Constants.daysInMonths);
         Timestamp lastSecondMonthTimestamp = getDateBasedOnOffSetDays(2 * Constants.daysInMonths);
         Timestamp lastThirdMonthTimestamp = getDateBasedOnOffSetDays(3 * Constants.daysInMonths);
-        System.out.println(" lastMonthTimestamp : " + lastMonthTimestamp + "lastSecondMonthTimestamp : " + lastSecondMonthTimestamp + "lastThirdMonthTimestamp : " +lastThirdMonthTimestamp );
 
         List<Transaction> lastMonthTransactions = transactionRepository.findAllByCustomerIdAndTransactionDateBetween(
                 id, lastMonthTimestamp, Timestamp.from(Instant.now()));
-        System.out.println("lastMonthTransactions ==========> " + lastMonthTransactions);
 
         List<Transaction> lastSecondMonthTransactions = transactionRepository
                 .findAllByCustomerIdAndTransactionDateBetween(id, lastSecondMonthTimestamp, lastMonthTimestamp);
-        System.out.println("lastSecondMonthTransactions ==========> " + lastSecondMonthTransactions);
 
         List<Transaction> lastThirdMonthTransactions = transactionRepository
                 .findAllByCustomerIdAndTransactionDateBetween(id, lastThirdMonthTimestamp,
                         lastSecondMonthTimestamp);
-        System.out.println("lastThirdMonthTransactions ==========> " + lastThirdMonthTransactions);
 
         Long lastMonthRewardPoints = getRewardsPerMonth(lastMonthTransactions);
         Long lastSecondMonthRewardPoints = getRewardsPerMonth(lastSecondMonthTransactions);
